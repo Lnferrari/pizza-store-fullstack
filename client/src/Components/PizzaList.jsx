@@ -1,18 +1,33 @@
 import React, { useContext } from 'react'
-import pizzasContext from '../contexts/pizzas/PizzasContext'
+import PizzasContext from '../contexts/pizzas/PizzasContext'
 import PizzaItem from './PizzaItem'
+import Row from 'react-bootstrap/Row'
+import { Col, Container } from 'react-bootstrap'
+import SearchContext from '../contexts/search/SearchContext'
 
 const PizzaList = () => {
-  const { allPizzas } = useContext(pizzasContext)
+  const { allPizzas } = useContext(PizzasContext)
+  const { searchQuery } = useContext(SearchContext)
 
-  const pizzaListMarkUp = allPizzas.map(pizza => (
-    <PizzaItem />
-  ))
+  const pizzaListMarkUp = allPizzas && allPizzas
+    .filter(pizza => (
+      pizza.name.toLowerCase().includes(searchQuery)
+    ))
+    .map(pizza => (
+      <PizzaItem key={pizza.id} data={pizza} />
+    ))
 
   return (
-    <section className='pizzaList'>
-      {pizzaListMarkUp}
-    </section>
+    <Row className='py-5'>
+      <Col xl={9} m={8} className='pizzaList'>
+        <Row className='mx-auto'>{ pizzaListMarkUp }</Row>
+      </Col>
+      <Col xl={3} className=''>
+        <div className=' h-100'>
+          CART
+        </div>
+      </Col>
+    </Row>
   )
 }
 
