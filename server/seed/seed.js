@@ -4,8 +4,8 @@ import faker from 'faker'
 import Pizza from '../models/Pizza.js'
 
 
-dotenv.config()
-const MONGO_URI = process.env.MONGO_URI
+dotenv.config();
+const MONGO_URI = process.env.MONGO_URI;
 
 
 (async () => {
@@ -18,13 +18,21 @@ const MONGO_URI = process.env.MONGO_URI
   .then(() => console.log('Connection to DB established!'))
   .catch(err => console.log(`[ERROR] Connection failed => ${err}`))
 
-  // create fake pizzas
+  // Delete all pizzas
+  try {
+    await Pizza.deleteMany({})
+    console.log('All pizzas have been deleted')
+  } catch (err) {
+    console.log(err)
+  }
+
+  // Create fake pizzas
   const pizzaPromises = Array(15)
     .fill(null)
     .map(() => {
       const pizzaData = {
         name: faker.address.cityName(),
-        description: faker.commerce.description(),
+        description: faker.commerce.productDescription(),
         price: faker.commerce.price(7.99, 13.80),
         image: faker.image.food()
       }
