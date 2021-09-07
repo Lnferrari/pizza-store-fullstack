@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Pizza from './Pizza.js';
+import Pizza from "./Pizza.js";
 
 const { Schema, model } = mongoose
 
@@ -14,3 +14,5 @@ const CartSchema = new Schema({
 
 
 const Cart = model('Cart', CartSchema)
+
+export default Cart
