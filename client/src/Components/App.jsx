@@ -13,15 +13,14 @@ import { useContext } from "react";
 
 function App() {
 
-
   return (
     <Router>
       <Header />
       <Switch>
         <Container className='py-5' fluid >
-          <Route path='/cart' exact component={Cart} />
+          <Route path='/' exact component={Home} />
           <Route path='/admin' exact component={PizzaList} />
-          <Route path='/' component={Home} />
+          <Route path='/pizzas/cart' exact component={Cart} />
         </Container>
       </Switch>
     </Router>

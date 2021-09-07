@@ -9,7 +9,7 @@ const Home = () => {
         <PizzaList />
       </Col>
       <Col xl={3} md={4} className=''>
-        <div className=' h-100'>
+        <div className=''>
           CART
         </div>
       </Col>

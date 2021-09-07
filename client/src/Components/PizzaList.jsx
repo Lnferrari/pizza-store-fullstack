@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { useLocation } from 'react-router'
 import PizzasContext from '../contexts/pizzas/PizzasContext'
 import PizzaItem from './PizzaItem'
-import { Col, Row } from 'react-bootstrap'
+import { Row } from 'react-bootstrap'
 import SearchContext from '../contexts/search/SearchContext'
 
 const PizzaList = () => {
@@ -23,7 +23,7 @@ const PizzaList = () => {
     ))
 
   return (
-    <Row className={`${pathname.startsWith('/admin') ? 'w-75' : ''} mx-auto`}>
+    <Row className={`${pathname.endsWith('/admin') ? 'w-75' : ''} mx-auto`}>
       { pizzaListMarkUp }
     </Row>
   )
