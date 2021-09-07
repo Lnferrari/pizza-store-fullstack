@@ -4,7 +4,25 @@
   box-sizing: border-box;
 }
 
-.App {
-  width: 100vw;
-  height: 100vh;
+
+.pizzaCard,
+.adminCard {
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.5);
+  transition: all .5s;
+}
+
+.pizzaCard:hover {
+  transform: translateY(-10px);
+}
+
+
+.buttons_container {
+  padding: 10px;
+}
+
+input {
+  width: min-content;
+  /* border: none; */
+  outline: none;
+
 }

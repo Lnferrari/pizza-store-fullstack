@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import SearchContext from './SearchContext'
 
 const SearchState = ({children}) => {
-  const [ searchQuery, setSearchQuery ] = useState(null)
+  const [ searchQuery, setSearchQuery ] = useState('')
 
 
   return (

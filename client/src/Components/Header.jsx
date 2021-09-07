@@ -11,8 +11,6 @@ const Header = () => {
   const  { searchQuery, setSearchQuery }= useContext(SearchContext)
   const { allPizzas, setAllPizzas } = useContext(PizzasContext)
   const { width } = useWindowSize()
-
-  console.log(searchQuery)
   
   const handleInput = e => setSearchQuery(e.target.value)
 
@@ -34,7 +32,7 @@ const Header = () => {
         </Navbar.Brand>
         <Navbar.Text className="justify-content-end">
             {
-              width >= 720
+              width >= 768
               ? <Form className="d-flex" style={{ maxHeight: '32px' }} onSubmit={handleSubmit}>
                   <FormControl
                     type="search"
