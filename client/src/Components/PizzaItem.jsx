@@ -2,6 +2,8 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Form, FormControl, Row, Col, Card, Button } from 'react-bootstrap'
 import { useLocation } from 'react-router-dom';
 import PizzasContext from '../contexts/pizzas/PizzasContext';
+import ModalMessage from './ModalMessage'
+
 
 const initialPizzaState = {
   name: '',
@@ -10,6 +12,7 @@ const initialPizzaState = {
 }
 
 const PizzaItem = ({ pizzaData }) => {
+  const [modalShow, setModalShow] = useState(false);
   const [ editedPizza, setEditedPizza ] = useState(initialPizzaState)
   const [ isLoading, setLoading ] = useState(false);
   const {
@@ -44,6 +47,7 @@ const PizzaItem = ({ pizzaData }) => {
 
   const submitEditionHandler = (id, editedPizzaData) => {
     updatePizza(id, editedPizzaData)
+    setModalShow(true)
     setPizzaInEditionMode(null)
   }
   
@@ -100,7 +104,7 @@ const PizzaItem = ({ pizzaData }) => {
   
   return (
     <Col xl={6} className='mx-auto mb-5'>
-      <Card className={`${pathname.startsWith('/admin') ? 'adminCard' : 'pizzaCard'} h-100`}
+      <Card className={`${pathname.endsWith('/admin') ? 'adminCard' : 'pizzaCard'} h-100`}
         style={{ width: '20rem', margin: '0 auto'}}>
         <Card.Img src={image}  />
         <Card.Body>
@@ -136,12 +140,17 @@ const PizzaItem = ({ pizzaData }) => {
         </Card.Body>
         <div className='buttons_container'>
             {
-              pathname.startsWith('/admin')
+              pathname.endsWith('/admin')
               ? adminButtons
               : clientButton
             }
           </div>
       </Card>
+      <ModalMessage 
+        show={modalShow}
+        pizza={pizzaData}
+        onHide={() => setModalShow(false)}
+      />
     </Col>
   )
 }
