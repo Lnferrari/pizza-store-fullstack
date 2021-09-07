@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Form, FormControl, Row, Col, Card, Button } from 'react-bootstrap'
 import { useLocation } from 'react-router-dom';
-
+import PizzasContext from '../contexts/pizzas/PizzasContext';
 
 const initialPizzaState = {
   name: '',
@@ -9,11 +9,17 @@ const initialPizzaState = {
   description: ''
 }
 
-const PizzaItem = ({pizzaData, editablePizzaId, setPizzaInEditionMode, updatePizza, onDelete }) => {
+const PizzaItem = ({ pizzaData }) => {
   const [ editedPizza, setEditedPizza ] = useState(initialPizzaState)
   const [ isLoading, setLoading ] = useState(false);
-  const { _id, image, name, description, price } = pizzaData
+  const {
+    setPizzaInEditionMode,
+    editablePizzaId,
+    updatePizza,
+    deletePizza
+  } = useContext(PizzasContext)
   const { pathname } = useLocation()
+  const { _id, image, name, description, price } = pizzaData
   const simulateNetworkRequest = () => {
     return new Promise((resolve) => setTimeout(resolve, 750));
   }
@@ -27,7 +33,6 @@ const PizzaItem = ({pizzaData, editablePizzaId, setPizzaInEditionMode, updatePiz
       description: pizza.description
     })
     setPizzaInEditionMode(pizza._id)
-    console.log(pizza._id)
   }
 
   const inputEditionHandler = e => {
@@ -48,7 +53,7 @@ const PizzaItem = ({pizzaData, editablePizzaId, setPizzaInEditionMode, updatePiz
       <Button
         variant="outline-danger"
         className='float-end align-bottom'
-        onClick={() => onDelete(_id)}>
+        onClick={() => deletePizza(_id)}>
           Delete
       </Button>
       {'  '}
