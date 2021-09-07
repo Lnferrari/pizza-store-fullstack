@@ -15,7 +15,7 @@ app.use( cors() )
 
 // Endpoints ----------------
 
-app.use('/', (req, res) => {
+app.get('/', (req, res) => {
   res.json('Welcome to the Pizza Store')
 })
 

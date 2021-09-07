@@ -11,7 +11,7 @@ import {
 const router = express.Router()
 
 
-router.route('').get(getPizzas).post(createPizza)
+router.route('/').get(getPizzas).post(createPizza)
 router.route('/:id').get(getPizza).patch(updatePizza).delete(deletePizza)
 
 export default router
