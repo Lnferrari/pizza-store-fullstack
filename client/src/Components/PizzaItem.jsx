@@ -14,7 +14,6 @@ const initialPizzaState = {
 const PizzaItem = ({ pizzaData }) => {
   const [modalShow, setModalShow] = useState(false);
   const [ editedPizza, setEditedPizza ] = useState(initialPizzaState)
-  const [ isLoading, setLoading ] = useState(false);
   const {
     setPizzaInEditionMode,
     editablePizzaId,
@@ -23,6 +22,7 @@ const PizzaItem = ({ pizzaData }) => {
   } = useContext(PizzasContext)
   const {
     cart,
+    createCart,
     addToCart,
     decrementItemQuantity,
     removeFromCart,
@@ -31,16 +31,7 @@ const PizzaItem = ({ pizzaData }) => {
   } = useContext(CartContext)
   const { pathname } = useLocation()
   const { _id, image, name, description, price } = pizzaData
-  const simulateNetworkRequest = () => {
-    return new Promise((resolve) => setTimeout(resolve, 500));
-  }
 
-  const fakeAdding = () => setLoading(true);
-  
-  const addToCartHandler = pizza => {
-    fakeAdding()
-    addToCart(pizza)
-  }
 
   const handleEditClick = pizza => {
     setEditedPizza({
@@ -95,21 +86,12 @@ const PizzaItem = ({ pizzaData }) => {
   const clientButton = (
     <Button type='button'
       variant='outline-success'
-      disabled={isLoading}
-      onClick={()=> !isLoading ? addToCartHandler(pizzaData) : null}
+      onClick={()=> addToCart(_id)}
       className='float-end align-bottom'
     >
-      {isLoading ? 'ADDING…' : 'ADD TO CART'}
+      ADD TO CART
     </Button>
   )
-
-  useEffect(() => {
-    if (isLoading) {
-      simulateNetworkRequest().then(() => {
-        setLoading(false);
-      });
-    }
-  }, [isLoading]);
 
   useEffect(() => {
     setPizzaInEditionMode(null)
