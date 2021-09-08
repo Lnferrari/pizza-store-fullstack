@@ -2,7 +2,7 @@ import Cart from '../models/Cart.js'
 
 
 // GET cart
-export const getCart = async (req, res, next) => {
+export const getItems = async (req, res, next) => {
   try {
     const cart = await Cart.find()
     res.json( cart )
@@ -45,6 +45,8 @@ export const createCart = async (req, res, next) => {
 // UPDATE cart
 export const updateCart = async (req, res, next) => {
   try {
+    const { id } = req.params
+    console.log(id)
     const updatedCart = await Cart.findByIdAndUpdate(
       id,
       req.body,
@@ -57,10 +59,9 @@ export const updateCart = async (req, res, next) => {
 }
 
 // DELETE item
-export const removeItem = async (req, res, next) => {
+export const deleteCart = async (req, res, next) => {
   try {
-    const { _id } = req.body
-    const cart = await Cart.delete( _id )
+    const cart = await Cart.delete()
     res.json( cart )
   } catch (err) {
     next( err )

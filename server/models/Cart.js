@@ -5,7 +5,7 @@ const { Schema, model } = mongoose
 
 
 const CartSchema = new Schema({
-  pizzas: [Pizza]
+  pizzas: [{ type: Schema.Types.ObjectId, ref: 'Pizza' }]
 },
 {
   versionKey: false,
