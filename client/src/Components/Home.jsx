@@ -1,6 +1,7 @@
 import React from 'react'
 import { Row, Col } from 'react-bootstrap'
 import PizzaList from './PizzaList'
+import Cart from './Cart'
 
 const Home = () => {
   return (
@@ -9,9 +10,7 @@ const Home = () => {
         <PizzaList />
       </Col>
       <Col xl={3} md={4} className=''>
-        <div className=''>
-          CART
-        </div>
+        <Cart />
       </Col>
     </Row>
   )

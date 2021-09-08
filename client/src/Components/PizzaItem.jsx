@@ -3,7 +3,7 @@ import { Form, FormControl, Row, Col, Card, Button } from 'react-bootstrap'
 import { useLocation } from 'react-router-dom';
 import PizzasContext from '../contexts/pizzas/PizzasContext';
 import ModalMessage from './ModalMessage'
-
+import CartContext from '../contexts/cart/CartContext';
 
 const initialPizzaState = {
   name: '',
@@ -21,14 +21,27 @@ const PizzaItem = ({ pizzaData }) => {
     updatePizza,
     deletePizza
   } = useContext(PizzasContext)
+  const {
+    cart,
+    addToCart,
+    decrementItemQuantity,
+    removeFromCart,
+    clearCart,
+    checkOut
+  } = useContext(CartContext)
   const { pathname } = useLocation()
   const { _id, image, name, description, price } = pizzaData
   const simulateNetworkRequest = () => {
-    return new Promise((resolve) => setTimeout(resolve, 750));
+    return new Promise((resolve) => setTimeout(resolve, 500));
   }
 
-  const addToCart = () => setLoading(true);
+  const fakeAdding = () => setLoading(true);
   
+  const addToCartHandler = pizza => {
+    fakeAdding()
+    addToCart(pizza)
+  }
+
   const handleEditClick = pizza => {
     setEditedPizza({
       name: pizza.name,
@@ -83,7 +96,7 @@ const PizzaItem = ({ pizzaData }) => {
     <Button type='button'
       variant='outline-success'
       disabled={isLoading}
-      onClick={!isLoading ? addToCart : null}
+      onClick={()=> !isLoading ? addToCartHandler(pizzaData) : null}
       className='float-end align-bottom'
     >
       {isLoading ? 'ADDING…' : 'ADD TO CART'}

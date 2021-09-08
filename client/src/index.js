@@ -3,12 +3,15 @@ import ReactDOM from 'react-dom';
 import App from './Components/App';
 import PizzasState from './contexts/pizzas/PizzasState';
 import SearchState from './contexts/search/SearchState'
+import CartState from './contexts/cart/CartState'
 
 ReactDOM.render(
-  <PizzasState>
-    <SearchState>
-      <App />
-    </SearchState>
-  </PizzasState>,
+  <CartState>
+    <PizzasState>
+      <SearchState>
+        <App />
+      </SearchState>
+    </PizzasState>
+  </CartState>,
   document.getElementById('root')
 );
