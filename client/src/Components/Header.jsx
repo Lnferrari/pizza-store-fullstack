@@ -6,10 +6,12 @@ import { ImSearch } from 'react-icons/im'
 import PizzasContext from '../contexts/pizzas/PizzasContext'
 import useWindowSize from '../helpers/useWindowSize'
 import SearchContext from '../contexts/search/SearchContext'
+import CartContext from '../contexts/cart/CartContext'
 
 const Header = () => {
   const  { searchQuery, setSearchQuery }= useContext(SearchContext)
   const { allPizzas, setAllPizzas } = useContext(PizzasContext)
+  const { cart } = useContext(CartContext)
   const { width } = useWindowSize()
   
   const handleInput = e => setSearchQuery(e.target.value)
@@ -27,7 +29,7 @@ const Header = () => {
       expand="xl"
     >
       <Container className='px-5' fluid>
-        <Navbar.Brand href="/home" className='fw-bold'>
+        <Navbar.Brand href="/" className='fw-bold'>
           Pizzeria Ferrari
         </Navbar.Brand>
         <Navbar.Text className="justify-content-end">
@@ -44,7 +46,8 @@ const Header = () => {
                   />
                 </Form>
               : <NavLink to='/cart' >
-                  <GiShoppingBag size={32} color='white' /> 
+                  <GiShoppingBag size={32} color='white' />
+                  {/* {cart.pizzas.length} */}
                 </NavLink>
             }
         </Navbar.Text>

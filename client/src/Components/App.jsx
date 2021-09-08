@@ -19,8 +19,8 @@ function App() {
       <Switch>
         <Container className='py-5' fluid >
           <Route path='/' exact component={Home} />
+          <Route path='/cart' exact component={Cart} />
           <Route path='/admin' exact component={PizzaList} />
-          <Route path='/pizzas/cart' exact component={Cart} />
         </Container>
       </Switch>
     </Router>

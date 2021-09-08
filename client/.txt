@@ -1,0 +1,10 @@
+Pizza.static('subTotal', () => (
+  this.price * this.quantity
+)
+
+Cart.static('totalPrice', () => (
+  this.pizzas.reducer((total, pizza) => {
+    total += pizza
+    return total
+  }, 0)
+)

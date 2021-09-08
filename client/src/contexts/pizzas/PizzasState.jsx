@@ -17,15 +17,15 @@ const PizzasState = ({children}) => {
     }
   }
 
-  const createPizza = async newPizza => {
-    // const pizzasCopy = [...allPizzas, newPizza]
-    // setAllPizzas(pizzasCopy)
+  const createPizza = async pizzaData => {
     try {
       const res = await axios.post(
         'http://localhost:5000/pizzas',
         { ...newPizza }
       )
-      fetchedData()
+      const newPizza = await res.data
+      const pizzasCopy = [...allPizzas, newPizza]
+      setAllPizzas(pizzasCopy)
     } catch (err) {
       console.log(err)
     }
@@ -34,36 +34,30 @@ const PizzasState = ({children}) => {
   const setPizzaInEditionMode = id => setEditablePizzaId(id)
 
   const updatePizza = async (id, pizzaData) => {
-    // const currentPizzas = allPizzas
-    // currentPizzas.forEach((pizza, idx, array) => {
-    //   if(pizza._id === id){
-    //     array[idx].name = pizzaData.name
-    //     array[idx].price = pizzaData.price
-    //     array[idx].description = pizzaData.description
-    //   }
-    // })
-    // setAllPizzas(currentPizzas)
     try {
       const res = await axios.patch(
         `http://localhost:5000/pizzas/${id}`,
         { ...pizzaData }
       )
-      fetchedData()
+      const updatedPizza = await res.data
+      const currentPizzas = allPizzas.map(pizza => (
+        pizza._id === id ? pizzaData : pizza
+      ))
+      setAllPizzas(currentPizzas)
     } catch (err) {
       console.log(err)
     }
   }
 
   const deletePizza = async id => {
-    // const filteredPizzas = allPizzas.filter(pizza => (
-    //   pizza._id !== id
-    // ))
-    // setAllPizzas(filteredPizzas)
     try {
       const response = await axios.delete(
         `http://localhost:5000/pizzas/${id}`
       )
-      fetchedData()
+      const remainingPizzas = allPizzas.filter(pizza => (
+        pizza._id !== id
+      ))
+      setAllPizzas(remainingPizzas)
     } catch (err) {
       console.log(err)
     }
