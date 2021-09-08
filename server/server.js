@@ -2,7 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import './db-connect.js'
 import pizzasRouter from './routes/pizzasRouter.js'
-
+import cartRouter from './routes/cartRouter.js'
 
 const app = express()
 const PORT = 5000
@@ -20,7 +20,7 @@ app.get('/', (req, res) => {
 })
 
 app.use('/pizzas', pizzasRouter)
-
+app.use('/cart', cartRouter)
 
 // ------------------------------
 
