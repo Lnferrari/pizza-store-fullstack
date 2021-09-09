@@ -14,7 +14,6 @@ const initialPizzaState = {
 const PizzaItem = ({ pizzaData }) => {
   const [modalShow, setModalShow] = useState(false);
   const [ editedPizza, setEditedPizza ] = useState(initialPizzaState)
-  const [ isLoading, setLoading ] = useState(false);
   const {
     setPizzaInEditionMode,
     editablePizzaId,
@@ -23,24 +22,16 @@ const PizzaItem = ({ pizzaData }) => {
   } = useContext(PizzasContext)
   const {
     cart,
-    addToCart,
-    decrementItemQuantity,
-    removeFromCart,
+    createCart,
+    addPizza,
+    decrementQuantity,
+    removePizza,
     clearCart,
     checkOut
   } = useContext(CartContext)
   const { pathname } = useLocation()
   const { _id, image, name, description, price } = pizzaData
-  const simulateNetworkRequest = () => {
-    return new Promise((resolve) => setTimeout(resolve, 500));
-  }
 
-  const fakeAdding = () => setLoading(true);
-  
-  const addToCartHandler = pizza => {
-    fakeAdding()
-    addToCart(pizza)
-  }
 
   const handleEditClick = pizza => {
     setEditedPizza({
@@ -70,7 +61,7 @@ const PizzaItem = ({ pizzaData }) => {
       <Button
         variant="outline-danger"
         className='float-end align-bottom'
-        onClick={() => deletePizza(_id)}>
+        onClick={() => removePizza(_id)}>
           Delete
       </Button>
       {'  '}
@@ -91,25 +82,16 @@ const PizzaItem = ({ pizzaData }) => {
       }
     </>
   )
-
+  
   const clientButton = (
     <Button type='button'
       variant='outline-success'
-      disabled={isLoading}
-      onClick={()=> !isLoading ? addToCartHandler(pizzaData) : null}
+      onClick={()=> cart.pizzas.length > 0 ? addPizza(_id) : createCart(_id)}
       className='float-end align-bottom'
     >
-      {isLoading ? 'ADDING…' : 'ADD TO CART'}
+      ADD TO CART
     </Button>
   )
-
-  useEffect(() => {
-    if (isLoading) {
-      simulateNetworkRequest().then(() => {
-        setLoading(false);
-      });
-    }
-  }, [isLoading]);
 
   useEffect(() => {
     setPizzaInEditionMode(null)
@@ -118,7 +100,7 @@ const PizzaItem = ({ pizzaData }) => {
   return (
     <Col xl={6} className='mx-auto mb-5'>
       <Card className={`${pathname.endsWith('/admin') ? 'adminCard' : 'pizzaCard'} h-100`}
-        style={{ width: '20rem', margin: '0 auto'}}>
+        style={{ width: '18rem', margin: '0 auto'}}>
         <Card.Img src={image}  />
         <Card.Body>
         {

@@ -47,7 +47,11 @@ const Header = () => {
                 </Form>
               : <NavLink to='/cart' >
                   <GiShoppingBag size={32} color='white' />
-                  {/* {cart.pizzas.length} */}
+                  {
+                    cart
+                    ? cart.pizzas.length
+                    : 0
+                  }
                 </NavLink>
             }
         </Navbar.Text>

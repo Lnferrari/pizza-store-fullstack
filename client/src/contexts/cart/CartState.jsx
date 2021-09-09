@@ -8,30 +8,34 @@ import CartContext from './CartContext'
 import { useReducer } from 'react'
 import axios from 'axios'
 
-let currentCart
+const initialState = {
+  pizzas: []
+}
 
 const CartState = ({children}) => {
-  const initialState = {
-    pizzas: []
-  }
   const [ cart, dispatch ] = useReducer(CartReducer, initialState)
-
-  const cartID = '6138b685944464de64d36989'
+  console.log('CART =>', cart)
   const API_URL = process.env.REACT_APP_API_CART_URL
-  
-  const getCart = async () => {
-    const response = await axios.get(API_URL)
-    const cart = await response.data
-    return cart
-  }
 
-  const createCart = async () => {
+  // const getCart = async () => {
+  //   const response = await axios.get(API_URL)
+  //   const cart = await response.data
+  //   return cart
+  // }
+
+  const createCart = async id => {
     try {
       const response = await axios.post(
         API_URL,
-        cart
+        {
+          pizzas: [ { 
+            pizza: id,
+            quantity: 1
+          } ]
+        }
       )
       const newCart = await response.data
+      console.log('CART CREATED! =>', newCart)
       dispatch({
         type: 'CREATE_CART',
         payload: newCart
@@ -39,87 +43,120 @@ const CartState = ({children}) => {
     } catch (err) {
       console.log(err)
     }
-    
   }
 
-  const addToCart = async pizza => {
-    const cartItems = cart.pizzas.slice()
-    let alreadyExists = false
-    cartItems.forEach(item => {
-      if (item._id === pizza._id) {
-        alreadyExists = true
-        item.quantity++
+  const addPizza = async id => {
+    try {
+      
+      const cartPizzas = cart.pizzas.slice()
+      let alreadyExists = false
+      cartPizzas.forEach(p => {
+        if (p.pizza._id === id) {
+          alreadyExists = true;
+          p.quantity++
+        }
+      })
+      if (!alreadyExists) {
+        cartPizzas.push({
+          pizza: id,
+          quantity: 1
+        })
       }
-    })
-    if (!alreadyExists) cartItems.push({
-      ...pizza,
-      quantity: 1
-    })
-    dispatch({
-      type: 'ADD_TO_CART',
-      payload: {
-        cartID,
-        cartItems
-      }
-    })
-    const response = await axios.patch(
-      API_URL,
-      cartItems
-    )
-    const updatedCart = await response.data
-    console.log(updatedCart)
+      console.log('cart id =>', cart._id)
+      const response = await axios.patch(
+        `${API_URL}/${cart._id}`,
+        { pizzas: cartPizzas }
+      )
+      const updatedCart = await response.data
+      dispatch({
+        type: 'ADD_TO_CART',
+        payload: updatedCart
+      })
+    } catch (err) {
+      console.log(err)
+    }
   }
 
-  const decrementItemQuantity = pizza => {
-    dispatch({
-      type: 'DECREMENT_QUANTITY', 
-      payload: {
-        cartID: cart._id,
-        pizza: pizza
-      }
-    })
+  const decrementQuantity = async id => {
+    try {
+      const cartPizzas = cart.pizzas.slice()
+      cartPizzas.forEach(p => {
+        if (p.pizza._id === id) {
+          p.quantity--
+        }
+      })
+      const response = await axios.patch(
+        `${API_URL}/${cart._id}`,
+        { pizzas: cartPizzas }
+      )
+      const updatedCart = await response.data
+      dispatch({
+        type: 'DECREMENT_QUANTITY',
+        payload: updatedCart
+      })
+    } catch (err) {
+      console.log(err)
+    }
   }
 
-  const removeFromCart = pizza => {
-    dispatch({
-      type: 'REMOVE_FROM_CART',
-      payload: {
-        cartID: cart._id,
-        pizza: pizza
-      }
-    })
+  const removePizza = async id => {
+    try {
+      const cartPizzas = cart.pizzas.filter(
+        p => p.pizza._id === id
+      )
+      const response = await axios.patch(
+        `${API_URL}/${cart._id}`,
+        { pizzas: cartPizzas }
+      )
+      const updatedCart = await response.data
+      dispatch({
+        type: 'REMOVE_FROM_CART',
+        payload: updatedCart
+        }
+      )
+    } catch (err) {
+      console.log(err)
+    }
   }
 
-  const clearCart = () => {
-    dispatch({
-      type: 'CLEAR_CART',
-      payload: {
-        cartID: cart._id
-      }
-    })
+  const clearCart = async () => {
+    try {
+      const emptyCart = await axios.patch(
+        `${API_URL}/${cart._id}`,
+        { pizzas: [] }
+      )
+      dispatch({
+        type: 'CLEAR_CART',
+        payload: emptyCart
+      })
+    } catch (err) {
+      console.log(err);
+    }
   }
 
-  const checkOut = () => {
-    dispatch({
-      type: 'CHECKOUT',
-      payload: {
-        cartID: cart._id
-      }
-    })
+  const checkOut = async () => {
+    try {
+      const emptyCart = await axios.patch(
+        `${API_URL}/${cart._id}`,
+        { pizzas: [] }
+      )
+      dispatch({
+        type: 'CLEAR_CART',
+        payload: emptyCart
+      })
+    } catch (err) {
+      console.log(err);
+    }
+    alert('GRACIAS POR SU COMPRA')
   }
-
-  // useEffect(async () => {
-  //   currentCart = await getCart()
-  //   console.log(currentCart)
-  // }, [])
 
   return (
     <CartContext.Provider value={{
       cart,
       createCart,
-      addToCart,
-      decrementItemQuantity,
-      removeFromCart,
+      addPizza,
+      decrementQuantity,
+      removePizza,
       clearCart,
       checkOut}}
     >

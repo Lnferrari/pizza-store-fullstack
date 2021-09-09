@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 import dotenv from 'dotenv'
 import faker from 'faker'
 import Pizza from '../models/Pizza.js'
+import Cart from '../models/Cart.js';
 
 
 dotenv.config();
@@ -20,7 +21,8 @@ const MONGO_URI = process.env.MONGO_URI;
 
   // Delete all pizzas
   try {
-    await Pizza.deleteMany({})
+    await Pizza.deleteMany({});
+    await Cart.deleteMany({});
     console.log('All pizzas have been deleted')
   } catch (err) {
     console.log(err)
