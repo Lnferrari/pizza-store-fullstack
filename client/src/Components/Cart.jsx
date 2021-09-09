@@ -8,44 +8,48 @@ const Cart = () => {
   const {
     cart,
     totalPrice,
-    addToCart,
-    decrementItemQuantity,
-    removeFromCart,
+    createCart,
+    addPizza,
+    decrementQuantity,
+    removePizza,
     clearCart,
     checkOut
-  } = useContext(CartContext)
-  console.log('HERE IS THE CART', cart)
-
-  
+  } = useContext(CartContext)  
 
   return (
     <div className='Cart w-75 mx-auto'>
       <h4 className='bg-dark text-white p-2 text-center'>Your Cart</h4>
-      {/* {
-        cart && cart.pizzas.length === 0
-        ? <p>Start adding items to your cart</p>
+      {
+        cart.pizzas.length === 0
+        ? <p className='text-center'>Start adding items to your cart</p>
         : null
-      } */}
+      }
       <div className='pizzas py-3'>
         {
-          cart && cart?.pizzas?.length > 0
+          cart.pizzas.length > 0
           ? cart.pizzas.map(pizza => (
               <div className='cart_item_container d-flex flex-column'>
                 <div className='d-flex justify-content-between'>
-                  <div>{pizza.name}</div>
-                  <div className=''>$ {pizza.quantity * pizza.price}</div>
+                  <div>{pizza.pizza.name}</div>
+                  <div className=''>$ {pizza.quantity * pizza.pizza.price}</div>
                 </div>
-                <div className='cart_item_quantity align-self-end'>
+                <div className='cart_item_quantity align-self-end d-flex align-items-center '>
                   {
                     pizza.quantity === 1
-                    ? <Remove />
-                    : <Minus />
+                    ? <button className='d-flex justify-content-center align-center border-0' onClick={() => removePizza(pizza)}>
+                      <Remove className='text-danger' />
+                    </button>
+                    : <button className='d-flex justify-content-center align-center border-0' onClick={() => decrementQuantity(pizza)}>
+                      <Minus className='text-danger' />
+                    </button>
                   }
-                  <div>{pizza.quantity}</div>
-                  <Add />
+                  <div className='px-1'>{pizza.quantity}</div>
+                  <button className='d-flex justify-content-center align-center border-0' onClick={() => addPizza(pizza)}>
+                    <Add className='text-danger' />
+                  </button>
                 </div>
               </div>
-            ))
+          ))
           : null
         }
       </div>
@@ -53,10 +57,10 @@ const Cart = () => {
       <div className='price py-3 '>
         <div className='d-flex justify-content-between'>
           <p>SubTotal</p>
-          <p>$ {totalPrice}</p>
+          <p>$ {cart.totalPrice || 0}</p>
         </div>
         {
-          cart && cart?.pizzas?.length > 0 
+          cart.pizzas.length > 0 
           ? <div className='d-flex justify-content-between text-muted'>
               <p>Delivery fee</p>
               <p className='text-danger'>Free</p>
@@ -65,7 +69,7 @@ const Cart = () => {
         }
         <div className='d-flex justify-content-between fw-bold'>
           <p>Total</p>
-          <p>$ {totalPrice}</p>
+          <p>$ {cart.totalPrice || 0}</p>
         </div>
       </div>
       <Button variant="success" className='success p-2 w-100' onClick={checkOut}>GO TO CHECKOUT</Button>

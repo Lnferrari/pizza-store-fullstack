@@ -23,9 +23,9 @@ const PizzaItem = ({ pizzaData }) => {
   const {
     cart,
     createCart,
-    addToCart,
-    decrementItemQuantity,
-    removeFromCart,
+    addPizza,
+    decrementQuantity,
+    removePizza,
     clearCart,
     checkOut
   } = useContext(CartContext)
@@ -61,7 +61,7 @@ const PizzaItem = ({ pizzaData }) => {
       <Button
         variant="outline-danger"
         className='float-end align-bottom'
-        onClick={() => deletePizza(_id)}>
+        onClick={() => removePizza(_id)}>
           Delete
       </Button>
       {'  '}
@@ -82,11 +82,11 @@ const PizzaItem = ({ pizzaData }) => {
       }
     </>
   )
-
+  
   const clientButton = (
     <Button type='button'
       variant='outline-success'
-      onClick={()=> addToCart(_id)}
+      onClick={()=> cart.pizzas.length > 0 ? addPizza(_id) : createCart(_id)}
       className='float-end align-bottom'
     >
       ADD TO CART
