@@ -35,7 +35,6 @@ const CartState = ({children}) => {
         }
       )
       const newCart = await response.data
-      // setCart(newCart)
       console.log('CART CREATED! =>', newCart)
       dispatch({
         type: 'CREATE_CART',
@@ -47,8 +46,8 @@ const CartState = ({children}) => {
   }
 
   const addPizza = async id => {
-    console.log('CART pizzas =>', cart.pizzas)
     try {
+      
       const cartPizzas = cart.pizzas.slice()
       let alreadyExists = false
       cartPizzas.forEach(p => {

@@ -36,17 +36,11 @@ const Cart = () => {
                 <div className='cart_item_quantity align-self-end d-flex align-items-center '>
                   {
                     pizza.quantity === 1
-                    ? <button className='d-flex justify-content-center align-center border-0' onClick={() => removePizza(pizza)}>
-                      <Remove className='text-danger' />
-                    </button>
-                    : <button className='d-flex justify-content-center align-center border-0' onClick={() => decrementQuantity(pizza)}>
-                      <Minus className='text-danger' />
-                    </button>
+                    ? <Remove className='text-danger' onClick={() => removePizza(pizza)}/>
+                    : <Minus className='text-danger' onClick={() => decrementQuantity(pizza)}/>
                   }
                   <div className='px-1'>{pizza.quantity}</div>
-                  <button className='d-flex justify-content-center align-center border-0' onClick={() => addPizza(pizza)}>
-                    <Add className='text-danger' />
-                  </button>
+                  <Add className='text-danger' onClick={() => addPizza(pizza)}/>
                 </div>
               </div>
           ))

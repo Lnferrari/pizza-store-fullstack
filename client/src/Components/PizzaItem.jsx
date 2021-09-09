@@ -100,7 +100,7 @@ const PizzaItem = ({ pizzaData }) => {
   return (
     <Col xl={6} className='mx-auto mb-5'>
       <Card className={`${pathname.endsWith('/admin') ? 'adminCard' : 'pizzaCard'} h-100`}
-        style={{ width: '20rem', margin: '0 auto'}}>
+        style={{ width: '18rem', margin: '0 auto'}}>
         <Card.Img src={image}  />
         <Card.Body>
         {
