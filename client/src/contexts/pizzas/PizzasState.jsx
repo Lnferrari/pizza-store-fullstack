@@ -4,14 +4,20 @@ import getAllPizzas from '../../helpers/getAllPizzas'
 import axios from 'axios'
 
 const PizzasState = ({children}) => {
-  const [ allPizzas, setAllPizzas ] = useState([])
+  const localPizzas = JSON.parse(localStorage.getItem('pizzas'))
+  const [ allPizzas, setAllPizzas ] = useState(localPizzas || [])
   const [ editablePizzaId, setEditablePizzaId ] = useState()
+
+  const API_URL = process.env.REACT_APP_API_PIZZAS_URL
 
   const fetchedData = async () => {
     try {
-      const res = await axios('http://localhost:5000/pizzas')
+      const res = await axios(API_URL)
       const pizzas = await res.data
       setAllPizzas(pizzas)
+      localStorage.setItem(
+        'pizzas', JSON.stringify(pizzas)
+      )
     } catch (err) {
       console.log(err)
     }
@@ -20,7 +26,7 @@ const PizzasState = ({children}) => {
   const createPizza = async pizzaData => {
     try {
       const res = await axios.post(
-        'http://localhost:5000/pizzas',
+        API_URL,
         { ...newPizza }
       )
       const newPizza = await res.data
@@ -36,7 +42,7 @@ const PizzasState = ({children}) => {
   const updatePizza = async (id, pizzaData) => {
     try {
       const res = await axios.patch(
-        `http://localhost:5000/pizzas/${id}`,
+        `${API_URL}/${id}`,
         { ...pizzaData }
       )
       const updatedPizza = await res.data
@@ -52,7 +58,7 @@ const PizzasState = ({children}) => {
   const deletePizza = async id => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/pizzas/${id}`
+        `${API_URL}/${id}`
       )
       const remainingPizzas = allPizzas.filter(pizza => (
         pizza._id !== id

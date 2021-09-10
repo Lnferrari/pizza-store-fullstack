@@ -1,11 +1,10 @@
 import React, {
-  useState,
+  useReducer,
   useEffect,
   useContext
 } from 'react'
-import CartReducer from './CartReducer'
 import CartContext from './CartContext'
-import { useReducer } from 'react'
+import CartReducer from './CartReducer'
 import axios from 'axios'
 
 const initialState = {
@@ -13,149 +12,181 @@ const initialState = {
 }
 
 const CartState = ({children}) => {
-  const [ cart, dispatch ] = useReducer(CartReducer, initialState)
-  console.log('CART =>', cart)
-  const API_URL = process.env.REACT_APP_API_CART_URL
+  const localCart = JSON.parse(localStorage.getItem('cart'))
+  const [ cart, dispatch ] = useReducer(CartReducer, localCart || {})
+
+
+  const API_PIZZAS_URL = process.env.REACT_APP_API_PIZZAS_URL
+  const API_CART_URL = process.env.REACT_APP_API_CART_URL
+
 
   // const getCart = async () => {
-  //   const response = await axios.get(API_URL)
+  //   const response = await axios.get(
+  //     `${API_CART_URL}/613a8c6be91bc862c601f9d2`
+  //   )
   //   const cart = await response.data
-  //   return cart
+  //   dispatch({
+  //     type: 'CREATE_CART',
+  //     payload: cart
+  //   })
   // }
 
-  const createCart = async id => {
+  // const getPizzaInfo = (id) => {
+  //   const data = allPizzas.find(
+  //     pizza => pizza._id === id
+  //   )
+  //   console.log('PIZZA INFORMATION =>', pizzaInfo)
+  //   return data
+  // }
+
+  const createCart = async () => {
     try {
       const response = await axios.post(
-        API_URL,
-        {
-          pizzas: [ { 
-            pizza: id,
-            quantity: 1
-          } ]
-        }
+        API_CART_URL,
+        { pizzas: [] }
       )
       const newCart = await response.data
-      console.log('CART CREATED! =>', newCart)
+      console.log('NEW CART! =>', newCart)
       dispatch({
         type: 'CREATE_CART',
         payload: newCart
       })
+    localStorage.setItem('cart', JSON.stringify(newCart))
     } catch (err) {
       console.log(err)
     }
   }
 
-  const addPizza = async id => {
-    try {
-      
-      const cartPizzas = cart.pizzas.slice()
-      let alreadyExists = false
-      cartPizzas.forEach(p => {
-        if (p.pizza._id === id) {
-          alreadyExists = true;
-          p.quantity++
+  const addToCart = async pizzaId => {
+    console.log('adding.. pizza ID ', pizzaId)
+    let updatedPizzas = []
+    const existPizza = cart?.pizzas?.find(
+      item => item.pizza === pizzaId
+    )
+    if (existPizza) {
+      console.log('existpizza!', existPizza)
+      updatedPizzas = cart.pizzas.map(item =>
+        item.pizza === existPizza.pizza
+        ? {
+          ...item,
+          quantity: item.quantity + 1
         }
-      })
-      if (!alreadyExists) {
-        cartPizzas.push({
-          pizza: id,
-          quantity: 1
-        })
-      }
-      console.log('cart id =>', cart._id)
-      const response = await axios.patch(
-        `${API_URL}/${cart._id}`,
-        { pizzas: cartPizzas }
-      )
-      const updatedCart = await response.data
-      dispatch({
-        type: 'ADD_TO_CART',
-        payload: updatedCart
-      })
-    } catch (err) {
-      console.log(err)
+        : item)
+    } else {
+      updatedPizzas = [
+        ...cart.pizzas,
+        { pizza: pizzaId , quantity: 1 }
+      ]
     }
+    console.log('UPDATED PIZZAS', updatedPizzas)
+    // const response = await axios.patch(
+    //   `${API_CART_URL}/${cart._id}`,
+    //   { pizzas: [...updatedPizzas] }
+    // )
+    // const updatedCart = await response.data
+    dispatch({
+      type: 'ADD_TO_CART',
+      payload: updatedPizzas
+    })
+    localStorage.setItem('cart', JSON.stringify(cart))
   }
 
-  const decrementQuantity = async id => {
-    try {
-      const cartPizzas = cart.pizzas.slice()
-      cartPizzas.forEach(p => {
-        if (p.pizza._id === id) {
-          p.quantity--
-        }
-      })
-      const response = await axios.patch(
-        `${API_URL}/${cart._id}`,
-        { pizzas: cartPizzas }
-      )
-      const updatedCart = await response.data
-      dispatch({
-        type: 'DECREMENT_QUANTITY',
-        payload: updatedCart
-      })
-    } catch (err) {
-      console.log(err)
-    }
-  }
+  // const decrementQuantity = async id => {
+  //   try {
+  //     // const pizzaItem = cart.pizzas.find(
+  //     //   p => p.pizza._id === id
+  //     // )
+  //     // pizza.quantity > 1
+  //     // ? pizzaItem.quantity--
+  //     // : 
+  //     // } else {
+  //     //   cartCopy.push({
+  //     //     pizza: id,
+  //     //     quantity: 1
+  //     //   })
+  //     // }
+  //     const cartCopy = cart.pizzas.slice()
+  //     cartCopy.forEach(p => {
+  //       if (p.pizza._id === id) {
+  //         p.quantity--
+  //       }
+  //     })
+  //     const response = await axios.patch(
+  //       `${API_CART_URL}/${cart._id}`,
+  //       { pizzas: cartCopy }
+  //     )
+  //     const updatedCart = await response.data
+  //   } catch (err) {
+  //     console.log(err)
+  //   }
+  // }
 
   const removePizza = async id => {
-    try {
-      const cartPizzas = cart.pizzas.filter(
-        p => p.pizza._id === id
-      )
-      const response = await axios.patch(
-        `${API_URL}/${cart._id}`,
-        { pizzas: cartPizzas }
-      )
-      const updatedCart = await response.data
-      dispatch({
-        type: 'REMOVE_FROM_CART',
-        payload: updatedCart
-        }
-      )
-    } catch (err) {
-      console.log(err)
-    }
+    dispatch({
+      type: 'REMOVE_FROM_CART',
+      payload: id
+    })
+
+    localStorage.setItem('cart', JSON.stringify(cart.pizzas))
   }
 
   const clearCart = async () => {
     try {
-      const emptyCart = await axios.patch(
-        `${API_URL}/${cart._id}`,
-        { pizzas: [] }
-      )
+      // const response = await axios.patch(
+      //   `${API_CART_URL}/${cart._id}`,
+      //   { pizzas: [] }
+      // )
+      // const emptyCart = await response.data
       dispatch({
-        type: 'CLEAR_CART',
-        payload: emptyCart
+        type: 'CLEAR_CART'
       })
     } catch (err) {
       console.log(err);
+    }
+    localStorage.setItem('cart', JSON.stringify([]))
+  }
+
+  const checkOut = () => {
+    // try {
+    //   const response = await axios.patch(
+    //     `${API_CART_URL}/${cart._id}`,
+    //     { pizzas: [] }
+    //   )
+    dispatch({
+      type: 'CHECKOUT'
+    })
+    alert('GRACIAS POR SU COMPRA')
+    localStorage.removeItem('cart')
+    // } catch (err) {
+    //   console.log(err);
+    // }
+  }
+
+  const testDB = async () => {
+    if (cart?.pizzas.length !== 0) {
+      await axios.patch(
+        `${API_CART_URL}/${cart._id}`,
+        { pizzas: [...cart.pizzas] }
+      )
     }
   }
 
-  const checkOut = async () => {
-    try {
-      const emptyCart = await axios.patch(
-        `${API_URL}/${cart._id}`,
-        { pizzas: [] }
-      )
-      dispatch({
-        type: 'CLEAR_CART',
-        payload: emptyCart
-      })
-    } catch (err) {
-      console.log(err);
+  useEffect(() => {
+    testDB()
+  }, [cart])
+
+  useEffect(() => {
+    if (!cart._id) {
+      createCart()
     }
-    alert('GRACIAS POR SU COMPRA')
-  }
+  })
 
   return (
     <CartContext.Provider value={{
+      API_PIZZAS_URL,
       cart,
       createCart,
-      addPizza,
-      decrementQuantity,
+      addToCart,
       removePizza,
       clearCart,
       checkOut}}

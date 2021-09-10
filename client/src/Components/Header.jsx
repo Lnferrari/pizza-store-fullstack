@@ -48,9 +48,9 @@ const Header = () => {
               : <NavLink to='/cart' >
                   <GiShoppingBag size={32} color='white' />
                   {
-                    cart
+                    cart && cart?.pizzas?.length > 0
                     ? cart.pizzas.length
-                    : 0
+                    : null
                   }
                 </NavLink>
             }

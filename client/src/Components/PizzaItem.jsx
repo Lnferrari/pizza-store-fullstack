@@ -23,7 +23,7 @@ const PizzaItem = ({ pizzaData }) => {
   const {
     cart,
     createCart,
-    addPizza,
+    addToCart,
     decrementQuantity,
     removePizza,
     clearCart,
@@ -86,7 +86,7 @@ const PizzaItem = ({ pizzaData }) => {
   const clientButton = (
     <Button type='button'
       variant='outline-success'
-      onClick={()=> cart.pizzas.length > 0 ? addPizza(_id) : createCart(_id)}
+      onClick={() => addToCart(_id)}
       className='float-end align-bottom'
     >
       ADD TO CART

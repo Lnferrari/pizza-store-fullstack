@@ -1,24 +1,62 @@
 import axios from "axios"
+import { NavItem } from "react-bootstrap"
 
 const API_URL = process.env.REACT_APP_API_CART_URL
 
 const CartReducer = (state, action) => {
-  const { payload } = action
+  console.log('A.P =>', action.payload)
+
   switch(action.type){
     case 'CREATE_CART':
-      return payload
+      return {
+        ...state,
+        ...action.payload
+      }
     case 'ADD_TO_CART':
-      return payload
+      console.log('FINAL RESULT =>', {
+        ...state,
+        pizzas: action.payload
+      })
+      console.log(state)
+      return {
+        ...state,
+        pizzas: action.payload
+      }
     case 'DECREMENT_QUANTITY':
-      return payload
+      const currentPizza = state.find(pizza => 
+        pizza.pizza._id === action.payload)
+      if (currentPizza?.quantity === 1) {
+        return state.filter(pizza => 
+          pizza.pizza._id !== action.payload
+        )
+      } else {
+        return state.map(pizza =>
+          pizza.pizza.id === action.payload
+          ? {
+             ...currentPizza,
+             quantity: pizza.quantity - 1
+          }
+          : pizza)
+        }
     case 'REMOVE_FROM_CART':
-      return payload
+      console.log('removing...', action.payload)
+      return {
+        ...state,
+        pizzas: state.pizzas.filter(p =>
+          p._id !== action.payload
+        )
+      }
     case 'CLEAR_CART':
-      return payload
+      return {
+        ...state,
+        pizzas: []
+      }
     case 'CHECKOUT':
-      return payload
+      return {
+        pizzas: []
+      }
     default:
-      return payload;
+      return state;
   }
 }
 

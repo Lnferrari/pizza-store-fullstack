@@ -16,13 +16,15 @@ function App() {
   return (
     <Router>
       <Header />
-      <Switch>
-        <Container className='py-5' fluid >
-          <Route path='/' exact component={Home} />
-          <Route path='/cart' exact component={Cart} />
-          <Route path='/admin' exact component={PizzaList} />
-        </Container>
-      </Switch>
+      <main>
+        <Switch>
+          <Container className='py-5' fluid >
+            <Route path='/' exact component={Home} />
+            <Route path='/cart' exact component={Cart} />
+            <Route path='/admin' exact component={PizzaList} />
+          </Container>
+        </Switch>
+      </main>
     </Router>
   );
 }
