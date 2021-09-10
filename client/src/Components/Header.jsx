@@ -1,16 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
-import { Navbar, Container, Button, Form, FormControl } from 'react-bootstrap'
+import React, { useContext } from 'react'
+import { NavLink } from 'react-router-dom'
+import { Navbar, Container, Form, FormControl } from 'react-bootstrap'
 import { GiShoppingBag } from 'react-icons/gi'
-import { ImSearch } from 'react-icons/im'
-import PizzasContext from '../contexts/pizzas/PizzasContext'
 import useWindowSize from '../helpers/useWindowSize'
 import SearchContext from '../contexts/search/SearchContext'
 import CartContext from '../contexts/cart/CartContext'
 
 const Header = () => {
   const  { searchQuery, setSearchQuery }= useContext(SearchContext)
-  const { allPizzas, setAllPizzas } = useContext(PizzasContext)
   const { cart } = useContext(CartContext)
   const { width } = useWindowSize()
   

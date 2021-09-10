@@ -30,7 +30,7 @@ const PizzasState = ({children}) => {
         { ...newPizza }
       )
       const newPizza = await res.data
-      const pizzasCopy = [...allPizzas, newPizza]
+      const pizzasCopy = [ ...allPizzas, newPizza ]
       setAllPizzas(pizzasCopy)
     } catch (err) {
       console.log(err)

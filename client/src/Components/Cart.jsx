@@ -14,20 +14,6 @@ const Cart = () => {
   } = useContext(CartContext)  
 
 
-  // const CartItemsMarkUp = cart && cart?.pizzas.map(
-  //   item => item.pizza
-  // )
-  // cart.pizzas.map(item => {
-  //   <CartItem
-  //     key={item.pizza}
-  //     id={item.pizza}
-  //     qty={item.quantity}
-  //   />
-  
-  // allPizzas.find(
-  //   pizza => pizza._id === id
-  // )
-
   return (
     <div className='Cart w-75 mx-auto'>
       <h4 className='bg-dark text-white p-2 text-center'>Your Cart</h4>
@@ -43,7 +29,10 @@ const Cart = () => {
             <CartItem
               key={item.pizza}
               id={item.pizza}
-              qty={item.quantity}
+              name={item.pizza.name}
+              qty={item.qty}
+              price={item.pizza.price}
+              image={item.pizza.image}
           />)
           : null
         }
@@ -52,7 +41,7 @@ const Cart = () => {
       <div className='price py-3 '>
         <div className='d-flex justify-content-between'>
           <p>SubTotal</p>
-          <p>$ {cart.totalPrice || 0}</p>
+          <p>$ {cart && cart.totalPrice || 0}</p>
         </div>
         {
           cart?.pizzas?.length > 0 
@@ -64,7 +53,7 @@ const Cart = () => {
         }
         <div className='d-flex justify-content-between fw-bold'>
           <p>Total</p>
-          <p>$ {cart.totalPrice}</p>
+          <p>$ {cart?.totalPrice || 0}</p>
         </div>
       </div>
       <Button variant="success" className='success p-2 w-100' onClick={checkOut}>GO TO CHECKOUT</Button>
