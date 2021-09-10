@@ -15,7 +15,7 @@ export const getAllCarts = async (req, res, next) => {
 export const getCart = async (req, res, next) => {
   try {
     const { id } = req.params
-    const cart = await Cart.findById( id ).populate('pizzas.pizza', "-_id")
+    const cart = await Cart.findById( id ).populate('pizzas.pizza')
     res.json( cart )
   } catch (err) {
     next( err )
@@ -32,12 +32,12 @@ export const createCart = async (req, res, next) => {
   }
 }
 
-
 // UPDATE cart
 export const updateCart = async (req, res, next) => {
   try {
     const { id } = req.params
-    const updatedCart = await Cart.findByIdAndUpdate(
+    console.log('REQ.BODY => ', req.body)
+    const updatedCart = await Cart.findOneAndUpdate(
       id,
       req.body,
       { new: true }
@@ -49,7 +49,7 @@ export const updateCart = async (req, res, next) => {
   }
 }
 
-// DELETE item
+// DELETE cart
 export const deleteCart = async (req, res, next) => {
   try {
     const { id } = req.params
