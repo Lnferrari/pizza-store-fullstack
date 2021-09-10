@@ -5,10 +5,6 @@ const { Schema, model } = mongoose
 
 
 const CartSchema = new Schema({
-  // userId: {
-  //   type: mongoose.Schema.Types.ObjectId,
-  //   ref: "User"
-  // },
   pizzas: [
     {
       _id: false,
