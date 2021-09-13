@@ -36,9 +36,10 @@ const CartState = ({children}) => {
   }
 
   const addToCart = async (id) => {
+    console.log('adding..', id)
     let updatedPizzas = []
     const existPizza = cart?.pizzas.find(
-      item => item.pizza === id
+      item => item.pizza._id === id
     )
     if (existPizza) {
       updatedPizzas = cart.pizzas.map(item =>
@@ -69,9 +70,11 @@ const CartState = ({children}) => {
   }
 
   const decrementQty = async (id) => {
+    console.log('decrementing..', id)
+    console.log('CART PIZZAS =>', cart.pizzas)
     try {
       const pizzasCopy = cart?.pizzas.map(
-        item => item.pizza === id
+        item => item.pizza._id === id
         ? {
           ...item,
           qty: item.qty - 1
@@ -95,10 +98,10 @@ const CartState = ({children}) => {
     }
   }
 
-  const removePizza = async (id) => {
+  const removeFromCart = async (id) => {
     try {
       const filteredPizzas = cart?.pizzas.filter(
-        item => item.pizza !== id
+        item => item.pizza._id !== id
         )
       const response = await axios.patch(
         `${API_CART_URL}/${cart._id}`,
@@ -169,7 +172,7 @@ const CartState = ({children}) => {
       createCart,
       addToCart,
       decrementQty,
-      removePizza,
+      removeFromCart,
       clearCart,
       checkOut}}
     >

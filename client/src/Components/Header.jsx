@@ -44,10 +44,10 @@ const Header = () => {
                 </Form>
               : <NavLink to='/cart'
                   className="shopping_bag d-flex align-items-center justify-content-center">
-                  <GiShoppingBag size={32} color='white' />
+                  <GiShoppingBag size={32} color='white'/>
                   {
                     cart && cart?.pizzas?.length > 0
-                    ? <span className='header_cart_qty text-dark'>
+                    ? <span className='header_cart_qty text-dark fw-bold'>
                       {cart.pizzas.length}
                     </span>
                     : null

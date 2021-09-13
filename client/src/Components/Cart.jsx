@@ -32,8 +32,8 @@ const Cart = () => {
           cart?.pizzas?.length > 0
           ? cart.pizzas.map(item =>
             <CartItem
-              key={item.pizza}
-              id={item.pizza}
+              key={item.pizza._id}
+              id={item.pizza._id}
               name={item.pizza.name}
               qty={item.qty}
               price={item.pizza.price}

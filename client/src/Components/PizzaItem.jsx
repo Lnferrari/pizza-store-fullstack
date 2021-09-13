@@ -11,35 +11,28 @@ const initialPizzaState = {
   description: ''
 }
 
-const PizzaItem = ({ pizzaData }) => {
+const PizzaItem = ({ id, image, name, description, price }) => {
+
   const [modalShow, setModalShow] = useState(false);
   const [ editedPizza, setEditedPizza ] = useState(initialPizzaState)
   const {
     setPizzaInEditionMode,
     editablePizzaId,
     updatePizza,
+    createPizza,
     deletePizza
   } = useContext(PizzasContext)
-  const {
-    cart,
-    createCart,
-    addToCart,
-    decrementQuantity,
-    removePizza,
-    clearCart,
-    checkOut
-  } = useContext(CartContext)
+  const { addToCart } = useContext(CartContext)
   const { pathname } = useLocation()
-  const { _id, image, name, description, price } = pizzaData
 
-
-  const handleEditClick = pizza => {
+  const handleEditClick = (id, name, price, description, image) => {
     setEditedPizza({
-      name: pizza.name,
-      price: pizza.price,
-      description: pizza.description
+      image: image,
+      name: name,
+      price: price,
+      description: description
     })
-    setPizzaInEditionMode(pizza._id)
+    setPizzaInEditionMode(id)
   }
 
   const inputEditionHandler = e => {
@@ -61,22 +54,22 @@ const PizzaItem = ({ pizzaData }) => {
       <Button
         variant="outline-danger"
         className='float-end align-bottom'
-        onClick={() => removePizza(_id)}>
+        onClick={() => deletePizza(id)}>
           Delete
       </Button>
       {'  '}
       {
-        _id === editablePizzaId
+        id === editablePizzaId
         ? <Button 
             variant="outline-success"
             className='float-start align-bottom'
-            onClick={() => submitEditionHandler(_id, editedPizza)}>
+            onClick={() => submitEditionHandler(id, editedPizza)}>
               Confirm
         </Button>
         : <Button 
             variant="outline-warning"
             className='float-start align-bottom'
-            onClick={() => handleEditClick(pizzaData)}>
+            onClick={() => handleEditClick(id, name, price, description, image)}>
               Edit
         </Button>
       }
@@ -86,7 +79,7 @@ const PizzaItem = ({ pizzaData }) => {
   const clientButton = (
     <Button type='button'
       variant='outline-success'
-      onClick={() => addToCart(_id)}
+      onClick={() => addToCart(id)}
       className='float-end align-bottom'
     >
       ADD TO CART
@@ -98,13 +91,13 @@ const PizzaItem = ({ pizzaData }) => {
   }, [])
   
   return (
-    <Col xl={4} className='mx-auto mb-5'>
+    <Col l={6} className='mx-auto mb-5'>
       <Card className={`${pathname.endsWith('/admin') ? 'adminCard' : 'pizzaCard'} h-100`}
         style={{ width: '18rem', margin: '0 auto'}}>
         <Card.Img src={image}  />
         <Card.Body>
         {
-          _id === editablePizzaId
+          id === editablePizzaId
           ? <Form onChange={inputEditionHandler}>
               <Row>
                 <Col md={9}>
@@ -143,7 +136,10 @@ const PizzaItem = ({ pizzaData }) => {
       </Card>
       <ModalMessage 
         show={modalShow}
-        pizza={pizzaData}
+        id={id}
+        name={name}
+        price={price}
+        description={description}
         onHide={() => setModalShow(false)}
       />
     </Col>

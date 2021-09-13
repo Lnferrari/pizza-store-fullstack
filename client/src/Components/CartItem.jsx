@@ -8,9 +8,9 @@ const CartItem = ({id, name, qty, price, image}) => {
     cart,
     addToCart,
     decrementQty,
-    removePizza
+    removeFromCart
   } = useContext(CartContext)
-
+  console.log('CART ITEM =>', id, name, qty, price)
 
   return (
     <div className='cart_item_container d-flex flex-column p-1'>
@@ -24,7 +24,7 @@ const CartItem = ({id, name, qty, price, image}) => {
         {
           qty === 1
           ? <Remove className='text-danger'
-            onClick={() => removePizza(id)}
+            onClick={() => removeFromCart(id)}
           />
           : <Minus className='text-danger'
             onClick={() => decrementQty(id)}

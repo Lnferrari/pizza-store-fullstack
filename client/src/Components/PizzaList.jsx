@@ -39,7 +39,11 @@ const PizzaList = () => {
     .map(pizza => (
       <PizzaItem
         key={pizza._id}
-        pizzaData={pizza}
+        id={pizza._id}
+        name={pizza.name}
+        price={pizza.price}
+        image={pizza.image}
+        description={pizza.description}
       />
     ))
 
@@ -52,6 +56,7 @@ const PizzaList = () => {
             value={newPizza.name}
             onChange={inputHandler}
             placeholder='Name'
+            required
           />
         </Col>
         <Col md={3}>
@@ -60,6 +65,7 @@ const PizzaList = () => {
             value={newPizza.price}
             onChange={inputHandler}
             placeholder='$ Price'
+            required
           />
         </Col>
       </Row>
@@ -71,6 +77,7 @@ const PizzaList = () => {
             onChange={inputHandler}
             placeholder={`Pizza's description...`}
             rows={5}
+            required
           >
           </Form.Control>
       </Col>
@@ -78,7 +85,9 @@ const PizzaList = () => {
         <Col>
           <Button
             variant="outline-success"
-            className='w-100'>
+            className='w-100'
+            onClick={createPizzaHandler}
+          >
             CREATE
           </Button>
         </Col>

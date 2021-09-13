@@ -24,13 +24,15 @@ const PizzasState = ({children}) => {
   }
 
   const createPizza = async newPizza => {
+    console.log('CREATING PIZZA ->', newPizza)
     try {
       const res = await axios.post(
         API_PIZZAS_URL,
         { ...newPizza }
       )
-      const newPizza = await res.data
-      const pizzasCopy = [ ...allPizzas, newPizza ]
+      const addedPizza = await res.data
+      const pizzasCopy = [ ...allPizzas, addedPizza ]
+      console.log('pizzasCopy', pizzasCopy)
       setAllPizzas(pizzasCopy)
     } catch (err) {
       console.log(err)
@@ -56,6 +58,7 @@ const PizzasState = ({children}) => {
   }
 
   const deletePizza = async id => {
+    console.log(id)
     try {
       const response = await axios.delete(
         `${API_PIZZAS_URL}/${id}`
