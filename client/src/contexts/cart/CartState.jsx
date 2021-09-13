@@ -1,6 +1,7 @@
-import React, { useReducer, useEffect} from 'react'
+import React, { useReducer, useEffect, useContext} from 'react'
 import CartContext from './CartContext'
 import CartReducer from './CartReducer'
+import PizzasContext from '../pizzas/PizzasContext'
 import axios from 'axios'
 
 const initialState = {
@@ -10,9 +11,8 @@ const initialState = {
 const CartState = ({children}) => {
   const localCart = JSON.parse(localStorage.getItem('cart'))
   const [ cart, dispatch ] = useReducer(CartReducer, localCart || initialState)
+  const API_PIZZAS_URL = useContext(PizzasContext)
 
-
-  const API_PIZZAS_URL = process.env.REACT_APP_API_PIZZAS_URL
   const API_CART_URL = process.env.REACT_APP_API_CART_URL
 
 
@@ -27,16 +27,19 @@ const CartState = ({children}) => {
         type: 'CREATE_CART',
         payload: newCart
       })
-    localStorage.setItem('cart', JSON.stringify(newCart))
+    localStorage.setItem('cart',
+      JSON.stringify( newCart )
+    )
     } catch (err) {
       console.log(err)
     }
   }
 
   const addToCart = async (id) => {
+    console.log('adding..', id)
     let updatedPizzas = []
     const existPizza = cart?.pizzas.find(
-      item => item.pizza === id
+      item => item.pizza._id === id
     )
     if (existPizza) {
       updatedPizzas = cart.pizzas.map(item =>
@@ -61,13 +64,17 @@ const CartState = ({children}) => {
       type: 'ADD_PIZZA',
       payload: updatedCart
     })
-    localStorage.setItem('cart', JSON.stringify(updatedCart))
+    localStorage.setItem('cart',
+      JSON.stringify( updatedCart )
+    )
   }
 
   const decrementQty = async (id) => {
+    console.log('decrementing..', id)
+    console.log('CART PIZZAS =>', cart.pizzas)
     try {
       const pizzasCopy = cart?.pizzas.map(
-        item => item.pizza === id
+        item => item.pizza._id === id
         ? {
           ...item,
           qty: item.qty - 1
@@ -83,26 +90,31 @@ const CartState = ({children}) => {
         type: 'DECREMENT_QTY',
         payload: updatedCart
       })
-      localStorage.setItem('cart', JSON.stringify(updatedCart))
+      localStorage.setItem('cart',
+        JSON.stringify( updatedCart )
+      )
     } catch (err) {
       console.log(err)
     }
   }
 
-  const removePizza = async (id) => {
+  const removeFromCart = async (id) => {
     try {
       const filteredPizzas = cart?.pizzas.filter(
-        item => item.pizza !== id
+        item => item.pizza._id !== id
         )
-        const response = await axios.patch(
-          `${API_CART_URL}/${cart._id}`,
-          { pizzas: filteredPizzas }
-          )
+      const response = await axios.patch(
+        `${API_CART_URL}/${cart._id}`,
+        { pizzas: filteredPizzas }
+      )
+      const updatedCart = await response.data
       dispatch({
         type: 'REMOVE_PIZZA',
-        payload: filteredPizzas
+        payload: updatedCart
       })
-      localStorage.setItem('cart', JSON.stringify({ ...cart, pizzas: filteredPizzas }))
+      localStorage.setItem('cart',
+        JSON.stringify( updatedCart )
+      )
     } catch (err) {
       
     }
@@ -121,7 +133,12 @@ const CartState = ({children}) => {
     } catch (err) {
       console.log(err);
     }
-    localStorage.setItem('cart', JSON.stringify({ ...cart, pizzas: [] }))
+    localStorage.setItem('cart',
+      JSON.stringify({
+        ...cart,
+        pizzas: []
+      })
+    )
   }
 
   const checkOut = async () => {
@@ -155,7 +172,7 @@ const CartState = ({children}) => {
       createCart,
       addToCart,
       decrementQty,
-      removePizza,
+      removeFromCart,
       clearCart,
       checkOut}}
     >

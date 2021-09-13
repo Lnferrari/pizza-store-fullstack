@@ -8,11 +8,11 @@ const PizzasState = ({children}) => {
   const [ allPizzas, setAllPizzas ] = useState(localPizzas || [])
   const [ editablePizzaId, setEditablePizzaId ] = useState()
 
-  const API_URL = process.env.REACT_APP_API_PIZZAS_URL
+  const API_PIZZAS_URL = process.env.REACT_APP_API_PIZZAS_URL
 
   const fetchedData = async () => {
     try {
-      const res = await axios(API_URL)
+      const res = await axios(API_PIZZAS_URL)
       const pizzas = await res.data
       setAllPizzas(pizzas)
       localStorage.setItem(
@@ -23,14 +23,16 @@ const PizzasState = ({children}) => {
     }
   }
 
-  const createPizza = async pizzaData => {
+  const createPizza = async newPizza => {
+    console.log('CREATING PIZZA ->', newPizza)
     try {
       const res = await axios.post(
-        API_URL,
+        API_PIZZAS_URL,
         { ...newPizza }
       )
-      const newPizza = await res.data
-      const pizzasCopy = [ ...allPizzas, newPizza ]
+      const addedPizza = await res.data
+      const pizzasCopy = [ ...allPizzas, addedPizza ]
+      console.log('pizzasCopy', pizzasCopy)
       setAllPizzas(pizzasCopy)
     } catch (err) {
       console.log(err)
@@ -42,7 +44,7 @@ const PizzasState = ({children}) => {
   const updatePizza = async (id, pizzaData) => {
     try {
       const res = await axios.patch(
-        `${API_URL}/${id}`,
+        `${API_PIZZAS_URL}/${id}`,
         { ...pizzaData }
       )
       const updatedPizza = await res.data
@@ -56,9 +58,10 @@ const PizzasState = ({children}) => {
   }
 
   const deletePizza = async id => {
+    console.log(id)
     try {
       const response = await axios.delete(
-        `${API_URL}/${id}`
+        `${API_PIZZAS_URL}/${id}`
       )
       const remainingPizzas = allPizzas.filter(pizza => (
         pizza._id !== id
@@ -75,7 +78,7 @@ const PizzasState = ({children}) => {
   }, [])
 
   return (
-    <PizzasContext.Provider value={{ allPizzas, setAllPizzas, setPizzaInEditionMode, editablePizzaId, updatePizza, deletePizza }}>
+    <PizzasContext.Provider value={{ API_PIZZAS_URL, allPizzas, setAllPizzas, setPizzaInEditionMode, editablePizzaId, updatePizza, createPizza, deletePizza }}>
       {children}
     </PizzasContext.Provider>
   )

@@ -20,7 +20,7 @@ const Header = () => {
 
   return (
     <Navbar 
-      bg="dark"
+      bg="danger"
       variant="dark"
       sticky="top"
       expand="xl"
@@ -42,11 +42,14 @@ const Header = () => {
                     onChange={handleInput}
                   />
                 </Form>
-              : <NavLink to='/cart' >
-                  <GiShoppingBag size={32} color='white' />
+              : <NavLink to='/cart'
+                  className="shopping_bag d-flex align-items-center justify-content-center">
+                  <GiShoppingBag size={32} color='white'/>
                   {
                     cart && cart?.pizzas?.length > 0
-                    ? cart.pizzas.length
+                    ? <span className='header_cart_qty text-dark fw-bold'>
+                      {cart.pizzas.length}
+                    </span>
                     : null
                   }
                 </NavLink>

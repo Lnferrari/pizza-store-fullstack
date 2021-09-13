@@ -2,7 +2,7 @@ import React from 'react'
 import { Button, Modal } from 'react-bootstrap'
 
 const ModalMessage = props => {
-  const { pizza, onHide } = props
+  const { id, name, price, description, onHide } = props
   return (
     <Modal
       {...props}
@@ -17,18 +17,18 @@ const ModalMessage = props => {
       </Modal.Header>
       <Modal.Body>
         <p className='text-muted fst-italic fs-6'>
-          Pizza id: { pizza._id }
+          Pizza id: { id }
         </p>
         <div>
           <h5>
             <span className='moda_title'>
-              {pizza.name}
+              {name}
               </span>
             <span className='moda_title'>
-              {pizza.price}
+              {price}
               </span>
           </h5>
-          <p>{pizza.description}</p>
+          <p>{description}</p>
         </div>
       </Modal.Body>
       <Modal.Footer>
