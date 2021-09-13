@@ -36,7 +36,7 @@ const MONGO_URI = process.env.MONGO_URI;
         name: faker.address.cityName(),
         description: faker.commerce.productDescription(),
         price: faker.commerce.price(7.99, 13.80),
-        image: faker.image.food()
+        image: faker.image.image()
       }
 
       console.log(`Pizza ${pizzaData.name} has been created`)
