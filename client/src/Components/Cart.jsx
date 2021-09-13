@@ -1,4 +1,5 @@
 import React, { useContext } from 'react'
+import { NavLink } from 'react-router-dom'
 import PizzasContext from '../contexts/pizzas/PizzasContext'
 import CartContext from '../contexts/cart/CartContext'
 import { Button } from 'react-bootstrap'
@@ -16,10 +17,14 @@ const Cart = () => {
 
   return (
     <div className='Cart w-75 mx-auto'>
-      <h4 className='bg-dark text-white p-2 text-center'>Your Cart</h4>
+      <NavLink to='/cart'
+        className='text-decoration-none'
+      >
+        <h4 className='bg-danger text-white p-2 text-center'>Your Cart</h4>
+      </NavLink>
       {
         cart?.pizzas?.length === 0
-        ? <p className='text-center'>Start adding items to your cart</p>
+        ? <p className='text-center py-2'>Start adding items to your cart</p>
         : null
       }
       <div className='pizzas py-3'>
@@ -38,14 +43,14 @@ const Cart = () => {
         }
       </div>
       <div className='separator border border-secondary'></div>
-      <div className='price py-3 '>
-        <div className='d-flex justify-content-between'>
+      <div className='price py-3'>
+        <div className='d-flex justify-content-between fw-light'>
           <p>SubTotal</p>
           <p>$ {cart && cart.totalPrice || 0}</p>
         </div>
         {
           cart?.pizzas?.length > 0 
-          ? <div className='d-flex justify-content-between text-muted'>
+          ? <div className='d-flex justify-content-between text-muted fw-light'>
               <p>Delivery fee</p>
               <p className='text-danger'>Free</p>
             </div>

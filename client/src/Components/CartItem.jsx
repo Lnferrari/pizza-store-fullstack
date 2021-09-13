@@ -13,14 +13,14 @@ const CartItem = ({id, name, qty, price, image}) => {
 
 
   return (
-    <div className='cart_item_container d-flex flex-column'>
+    <div className='cart_item_container d-flex flex-column p-1'>
       <div className='d-flex justify-content-between'>
         <div>{name}</div>
-        <div className=''>
+        <div className='fw-light'>
           $ {qty * price}
         </div>
       </div>
-      <div className='cart_item_qty align-self-end d-flex align-items-center '>
+      <div className='cart_item_qty align-self-end d-flex align-items-center'>
         {
           qty === 1
           ? <Remove className='text-danger'
@@ -30,7 +30,7 @@ const CartItem = ({id, name, qty, price, image}) => {
             onClick={() => decrementQty(id)}
           />
         }
-        <div className='px-1'>{qty}</div>
+        <div className='px-2 py-1 fw-bold'>{qty}</div>
         <Add className='text-danger'
           onClick={() => addToCart(id)}
         />
