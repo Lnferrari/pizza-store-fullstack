@@ -21,12 +21,6 @@ function App() {
           </Container>
         </Switch>
       </main>
-      <footer className='bg-success p-3 text-light
-        d-flex justify-content-center
-        fixed-bottom'
-      >
-        &copy; 2021 &#8226; Lucas Ferrari
-      </footer>
     </Router>
   );
 }

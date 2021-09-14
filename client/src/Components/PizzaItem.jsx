@@ -107,11 +107,11 @@ const PizzaItem = ({ id, image, name, description, price }) => {
                   <Form.Control name='price' value={`${editedPizza.price}`} />
                 </Col>
               </Row>
-                <Row>
+                <Col>
                   <Form.Control name='description' as="textarea" rows={5}>
                     {description}
                   </Form.Control>
-                </Row>
+                </Col>
             </Form>
           : <>
               <Card.Title>
