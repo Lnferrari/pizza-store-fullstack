@@ -101,7 +101,9 @@ To get a local copy up and running follow these simple steps.
   In the path '/admin' it is possible to create new pizzas through a simple form as well as edit/delete the already uploaded ones.
 </p>
 </br>
-![pizza-store][screenshot-1]  ![pizza-store][screenshot-2]
+
+![Pizza Store][screenshot 1]
+![Pizza store][screenshot 2]
 
 
 
@@ -154,7 +156,7 @@ Distributed under the MIT License.
 
 <!-- MARKDOWN LINKS & IMAGES -->
 [main page]: ./assets/main-pizzeria.png
-[screenshot-1]: ./assets/pizzeria-1.png
-[screenshot-2]: ./assets/pizzeria-2.png
+[screenshot 1]: ./assets/pizzeria-1.png
+[screenshot 2]: ./assets/pizzeria-2.png
 [issues]: https://github.com/Lnferrari/pizza-store-fullstack/issues
 [linkedin]: https://www.linkedin.com/in/lucasferrari1/
