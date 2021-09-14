@@ -8,7 +8,7 @@ const PizzaSchema = new Schema({
   name: { type: String, required: true, unique: true },
   description: { type: String, required: true },
   price: { type: Number, required: true },
-  image: { type: String, default: faker.image.image() }
+  image: { type: String, default: "https://source.unsplash.com/200x200/?foood,pizza" }
 },
 {
   versionKey: false,

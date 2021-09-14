@@ -36,13 +36,11 @@ export const createCart = async (req, res, next) => {
 export const updateCart = async (req, res, next) => {
   try {
     const { id } = req.params
-    console.log('REQ.BODY => ', req.body)
     const updatedCart = await Cart.findOneAndUpdate(
       id,
       req.body,
       { new: true }
     ).populate('pizzas.pizza')
-    console.log('UPDATED CART => ', updatedCart)
     res.json( updatedCart )
   } catch (err) {
     next( err )
