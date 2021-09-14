@@ -17,7 +17,7 @@ const Cart = () => {
   const { pathname } = useLocation()
 
   return (
-    <div className={`${pathname.endsWith('/cart') ? 'w-50' : 'w-75'} Cart  mx-auto mx-auto`}>
+    <div className={`${pathname.endsWith('/cart') ? 'w-50' : 'w-75'} Cart mx-auto`}>
       <Link to='/cart'
         className='text-decoration-none'
       >
