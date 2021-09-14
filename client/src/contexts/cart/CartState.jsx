@@ -1,4 +1,5 @@
-import React, { useReducer, useEffect, useContext} from 'react'
+import React, { useReducer, useEffect, useContext } from 'react'
+import { useHistory } from 'react-router'
 import CartContext from './CartContext'
 import CartReducer from './CartReducer'
 import PizzasContext from '../pizzas/PizzasContext'
@@ -15,6 +16,7 @@ const CartState = ({children}) => {
 
   const API_CART_URL = process.env.REACT_APP_API_CART_URL
 
+  let history = useHistory()
 
   const createCart = async () => {
     try {
@@ -154,6 +156,7 @@ const CartState = ({children}) => {
     })
     alert('GRACIAS POR SU COMPRA')
     localStorage.removeItem('cart')
+    history.push("/")
     } catch (err) {
       console.log(err);
     }

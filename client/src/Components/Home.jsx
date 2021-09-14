@@ -6,10 +6,10 @@ import Cart from './Cart'
 const Home = () => {
   return (
     <Row className='mx-auto' >
-      <Col xxl={9} md={6} className='home_pizzaList mx-auto'>
+      <Col xxl={9} md={7} sm={12} className='home_pizzaList mx-auto'>
         <PizzaList />
       </Col>
-      <Col xxl={3} md={6} className=''>
+      <Col xxl={3} md={5}>
         <Cart />
       </Col>
     </Row>

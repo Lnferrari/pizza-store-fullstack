@@ -1,22 +1,18 @@
-import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
-import PizzasState from "../contexts/pizzas/PizzasState";
 import Header from './Header'
+import Home from "./Home";
 import PizzaList from "./PizzaList";
 import Cart from './Cart'
-
-import '../App.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Home from "./Home";
-import { useContext } from "react";
+import '../App.css'
 
 function App() {
 
   return (
     <Router>
       <Header />
-      <main>
+      <main className=''>
         <Switch>
           <Container className='py-5' fluid >
             <Route path='/' exact component={Home} />
@@ -25,6 +21,12 @@ function App() {
           </Container>
         </Switch>
       </main>
+      <footer className='bg-success p-3 text-light
+        d-flex justify-content-center
+        fixed-bottom'
+      >
+        &copy; 2021 &#8226; Lucas Ferrari
+      </footer>
     </Router>
   );
 }
