@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import PizzasContext from './PizzasContext'
-import getAllPizzas from '../../helpers/getAllPizzas'
 import axios from 'axios'
 
 const PizzasState = ({children}) => {

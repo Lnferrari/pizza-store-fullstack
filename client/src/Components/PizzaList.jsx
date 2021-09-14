@@ -99,7 +99,7 @@ const PizzaList = () => {
     <Row className={`${pathname.endsWith('/admin') ? 'w-100' : ''} mx-auto`}>
       {
         pathname.endsWith('/admin')
-        ? <Col className='mx-auto' md={4}>{newPizzaForm}</Col>
+        ? <Col className='mx-auto' xl={4} >{newPizzaForm}</Col>
         : null
       }
       { pizzaListMarkUp }

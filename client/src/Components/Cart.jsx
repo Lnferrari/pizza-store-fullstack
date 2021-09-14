@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import PizzasContext from '../contexts/pizzas/PizzasContext'
 import CartContext from '../contexts/cart/CartContext'
 import { Button } from 'react-bootstrap'
@@ -14,14 +14,15 @@ const Cart = () => {
     checkOut
   } = useContext(CartContext)  
 
+  const { pathname } = useLocation()
 
   return (
-    <div className='Cart w-75 mx-auto'>
-      <NavLink to='/cart'
+    <div className={`${pathname.endsWith('/cart') ? 'w-50' : 'w-75'} Cart  mx-auto mx-auto`}>
+      <Link to='/cart'
         className='text-decoration-none'
       >
         <h4 className='bg-danger text-white p-2 text-center'>Your Cart</h4>
-      </NavLink>
+      </Link>
       {
         cart?.pizzas?.length === 0
         ? <p className='text-center py-2'>Start adding items to your cart</p>
@@ -61,7 +62,12 @@ const Cart = () => {
           <p>$ {cart?.totalPrice || 0}</p>
         </div>
       </div>
-      <Button variant="success" className='success p-2 w-100' onClick={checkOut}>GO TO CHECKOUT</Button>
+      <Button variant="success"
+        className='success p-2 w-100'
+        onClick={checkOut}
+      >
+        GO TO CHECKOUT
+      </Button>
     </div>
   )
 }
