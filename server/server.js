@@ -24,7 +24,7 @@ app.use(`${process.env.PUBLIC_URL}/cart`, cartRouter)
 
 // ------------------------------
 
-app.listen(PORT, () => console.log(
+app.listen(`${process.env.PUBLIC_URL}`, () => console.log(
   `API has started successfully on http://localhost:${PORT}`
 ))
 
