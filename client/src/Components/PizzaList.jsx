@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { useLocation } from 'react-router'
 import PizzasContext from '../contexts/pizzas/PizzasContext'
 import PizzaItem from './PizzaItem'

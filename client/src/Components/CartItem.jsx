@@ -3,9 +3,8 @@ import CartContext from '../contexts/cart/CartContext'
 import { HiOutlineMinusSm as Minus, HiOutlinePlusSm as Add } from 'react-icons/hi'
 import { IoTrashOutline as Remove } from 'react-icons/io5'
 
-const CartItem = ({id, name, qty, price, image}) => {
+const CartItem = ({id, name, qty, price}) => {
   const {
-    cart,
     addToCart,
     decrementQty,
     removeFromCart

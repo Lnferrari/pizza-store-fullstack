@@ -19,7 +19,7 @@ const CartState = ({children}) => {
   const createCart = async () => {
     try {
       const response = await axios.post(
-        API_CART_URL,
+        `${API_URL}/cart`,
         { pizzas: [] }
       )
       const newCart = await response.data

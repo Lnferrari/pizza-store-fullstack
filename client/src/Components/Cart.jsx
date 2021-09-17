@@ -37,8 +37,7 @@ const Cart = () => {
               name={item.pizza.name}
               qty={item.qty}
               price={item.pizza.price}
-              image={item.pizza.image}
-          />)
+            />)
           : null
         }
       </div>
