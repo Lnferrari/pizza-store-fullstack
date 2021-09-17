@@ -36,9 +36,11 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-<p>This project (my first full stack project) was built to practice building web applications from scratch and get familiarized with the use of databases.
+<p>
+  This project (my first full stack project) was built to practice building web applications from scratch and get familiarized with the use of databases.
   It contains the functionality to add/remove pizzas to the cart.
-  In the path '/admin' it is possible to create new pizzas through a simple form as well as edit/delete the already uploaded ones.</p>
+  In the path '/admin' it is possible to create new pizzas through a simple form as well as edit/delete the already uploaded ones.
+</p>
 
 ![Pizza Store Screen Shot][main page]
 
@@ -95,11 +97,11 @@ To get a local copy up and running follow these simple steps.
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-<p>
   Clicking on **ADD TO CART** button of the desired pizza it will be added to your cart. To add more pizzas of the same type either press **ADD TO CART** again or the **+** button shown in the cart (as many times as you wish). By clicking the **-** will reduce the number of items of that type by 1 and when there is only 1 left, instead of the **-** button a trash icon will be displayed, which has the functionality to remove the item from the cart.
-  The _NavBar_ has a search field -only available on screens larger than 768px- which allows you to filter pizzas by name. For devices with a smaller width a shopping cart icon is displayed.
+  
+  The __NavBar__ has a search field -only available on screens larger than 768px- which allows you to filter pizzas by name. For devices with a smaller width a shopping cart icon is displayed.
+  
   In the path '/admin' it is possible to create new pizzas through a simple form as well as edit/delete the already uploaded ones.
-</p>
 </br>
 
 ![Pizza Store][screenshot 1]
@@ -143,7 +145,7 @@ Contributions are what make the open source community such an amazing place to l
 
 Lucas Ferrari - [Linkedin][linkedin] - ln.ferrari@hotmail.com
 
-Project Link: [https://pizza-store-olive.vercel.app/][Pizza store full-stack]
+Project Link: [Pizza store full-stack](https://pizza-store-olive.vercel.app/)
 
 
 
