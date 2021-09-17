@@ -15,8 +15,6 @@ const CartState = ({children}) => {
   
   const API_URL = process.env.REACT_APP_API_URL
 
-  console.log('API =>', API_URL)
-
   let history = useHistory()
 
   const createCart = async () => {
@@ -39,7 +37,6 @@ const CartState = ({children}) => {
   }
 
   const addToCart = async (id) => {
-    console.log('adding..', id)
     let updatedPizzas = []
     const existPizza = cart?.pizzas.find(
       item => item.pizza._id === id
@@ -73,8 +70,6 @@ const CartState = ({children}) => {
   }
 
   const decrementQty = async (id) => {
-    console.log('decrementing..', id)
-    console.log('CART PIZZAS =>', cart.pizzas)
     try {
       const pizzasCopy = cart?.pizzas.map(
         item => item.pizza._id === id
@@ -150,7 +145,6 @@ const CartState = ({children}) => {
         `${API_URL}/cart/${cart._id}`,
       )
       const checkout = await response.data
-      console.log('CHECKOUT=>', checkout)
     dispatch({
       type: 'CHECKOUT',
       payload: checkout

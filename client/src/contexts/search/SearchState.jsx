@@ -4,7 +4,6 @@ import SearchContext from './SearchContext'
 const SearchState = ({children}) => {
   const [ searchQuery, setSearchQuery ] = useState('')
 
-
   return (
     <SearchContext.Provider value={{ searchQuery, setSearchQuery }}>
       {children}

@@ -24,7 +24,7 @@ const CartReducer = (state, action) => {
     case 'CLEAR_CART':
       return {
         ...state,
-        pizzas: []
+        ...action.payload
       }
     case 'CHECKOUT':
       return {

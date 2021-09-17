@@ -9,9 +9,6 @@ const PizzasState = ({children}) => {
   const [ editablePizzaId, setEditablePizzaId ] = useState()
   const { API_URL } = useContext(CartContext)
 
-  console.log('process', process.env.REACT_APP_API_URL)
-  console.log('api', API_URL);
-
   const fetchedData = async () => {
     try {
       const res = await axios(`${API_URL}/pizzas`)
@@ -26,7 +23,6 @@ const PizzasState = ({children}) => {
   }
 
   const createPizza = async newPizza => {
-    console.log('CREATING PIZZA ->', newPizza)
     try {
       const res = await axios.post(
         `${API_URL}/pizzas`,
@@ -34,7 +30,6 @@ const PizzasState = ({children}) => {
       )
       const addedPizza = await res.data
       const pizzasCopy = [ ...allPizzas, addedPizza ]
-      console.log('pizzasCopy', pizzasCopy)
       setAllPizzas(pizzasCopy)
     } catch (err) {
       console.log(err)
@@ -60,7 +55,6 @@ const PizzasState = ({children}) => {
   }
 
   const deletePizza = async id => {
-    console.log(id)
     try {
       const response = await axios.delete(
         `${API_URL}/pizzas/${id}`

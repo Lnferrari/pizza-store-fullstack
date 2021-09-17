@@ -9,7 +9,6 @@ const CartItem = ({id, name, qty, price}) => {
     decrementQty,
     removeFromCart
   } = useContext(CartContext)
-  console.log('CART ITEM =>', id, name, qty, price)
 
   return (
     <div className='cart_item_container d-flex flex-column p-1'>
