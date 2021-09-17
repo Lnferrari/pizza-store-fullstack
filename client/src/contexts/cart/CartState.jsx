@@ -12,9 +12,7 @@ const initialState = {
 const CartState = ({children}) => {
   const localCart = JSON.parse(localStorage.getItem('cart'))
   const [ cart, dispatch ] = useReducer(CartReducer, localCart || initialState)
-  const API_PIZZAS_URL = useContext(PizzasContext)
-
-  const API_CART_URL = process.env.REACT_APP_API_CART_URL
+  const API_URL = useContext(PizzasContext)
 
   let history = useHistory()
 
@@ -58,7 +56,7 @@ const CartState = ({children}) => {
       ]
     }
     const response = await axios.patch(
-      `${API_CART_URL}/${cart._id}`,
+      `${API_URL}/cart/${cart._id}`,
       { pizzas: updatedPizzas }
     )
     const updatedCart = await response.data
@@ -84,7 +82,7 @@ const CartState = ({children}) => {
         : item
       )
       const response = await axios.patch(
-        `${API_CART_URL}/${cart._id}`,
+        `${API_URL}/cart/${cart._id}`,
         { pizzas: pizzasCopy }
       )
       const updatedCart = await response.data
@@ -106,7 +104,7 @@ const CartState = ({children}) => {
         item => item.pizza._id !== id
         )
       const response = await axios.patch(
-        `${API_CART_URL}/${cart._id}`,
+        `${API_URL}/cart/${cart._id}`,
         { pizzas: filteredPizzas }
       )
       const updatedCart = await response.data
@@ -125,7 +123,7 @@ const CartState = ({children}) => {
   const clearCart = async () => {
     try {
       const response = await axios.patch(
-        `${API_CART_URL}/${cart._id}`,
+        `${API_URL}/cart/${cart._id}`,
         { pizzas: [] }
       )
       const emptyCart = await response.data
@@ -146,7 +144,7 @@ const CartState = ({children}) => {
   const checkOut = async () => {
     try {
       const response = await axios.delete(
-        `${API_CART_URL}/${cart._id}`
+        `${API_URL}/cart/${cart._id}`,
       )
       const checkout = await response.data
       console.log('CHECKOUT=>', checkout)
@@ -170,7 +168,6 @@ const CartState = ({children}) => {
 
   return (
     <CartContext.Provider value={{
-      API_PIZZAS_URL,
       cart,
       createCart,
       addToCart,

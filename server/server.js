@@ -15,7 +15,7 @@ app.use( cors() )
 
 // Endpoints ----------------
 
-app.get('/', (req, res) => {
+app.get(`${process.env.PUBLIC_URL}`, (req, res) => {
   res.json('Welcome to the Pizza Store')
 })
 

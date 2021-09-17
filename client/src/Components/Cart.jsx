@@ -8,7 +8,6 @@ import CartItem from './CartItem'
 const Cart = () => {
   const { allPizzas } = useContext(PizzasContext)
   const {
-    API_PIZZAS_URL,
     cart,
     clearCart,
     checkOut

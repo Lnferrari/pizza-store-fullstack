@@ -4,7 +4,6 @@ import PizzasContext from '../contexts/pizzas/PizzasContext'
 import PizzaItem from './PizzaItem'
 import { Form, Row, Col, Button } from 'react-bootstrap'
 import SearchContext from '../contexts/search/SearchContext'
-import axios from 'axios'
 
 const initialPizzaState = {
   name: '',
@@ -14,7 +13,7 @@ const initialPizzaState = {
 
 const PizzaList = () => {
   const [ newPizza, setNewPizza ] = useState(initialPizzaState)
-  const { allPizzas, setAllPizzas, createPizza, API_PIZZAS_URL } = useContext(PizzasContext)
+  const { allPizzas, createPizza } = useContext(PizzasContext)
   const { searchQuery } = useContext(SearchContext)
   const { pathname } = useLocation()
 

@@ -7,11 +7,11 @@ const PizzasState = ({children}) => {
   const [ allPizzas, setAllPizzas ] = useState(localPizzas || [])
   const [ editablePizzaId, setEditablePizzaId ] = useState()
 
-  const API_PIZZAS_URL = process.env.REACT_APP_API_PIZZAS_URL
+  const API_URL = process.env.REACT_APP_API_URL
 
   const fetchedData = async () => {
     try {
-      const res = await axios(API_PIZZAS_URL)
+      const res = await axios(`${API_URL}/pizzas`)
       const pizzas = await res.data
       setAllPizzas(pizzas)
       localStorage.setItem(
@@ -26,7 +26,7 @@ const PizzasState = ({children}) => {
     console.log('CREATING PIZZA ->', newPizza)
     try {
       const res = await axios.post(
-        API_PIZZAS_URL,
+        `${API_URL}/pizzas`,
         { ...newPizza }
       )
       const addedPizza = await res.data
@@ -43,7 +43,7 @@ const PizzasState = ({children}) => {
   const updatePizza = async (id, pizzaData) => {
     try {
       const res = await axios.patch(
-        `${API_PIZZAS_URL}/${id}`,
+        `${API_URL}/pizzas/${id}`,
         { ...pizzaData }
       )
       const updatedPizza = await res.data
@@ -60,7 +60,7 @@ const PizzasState = ({children}) => {
     console.log(id)
     try {
       const response = await axios.delete(
-        `${API_PIZZAS_URL}/${id}`
+        `${API_URL}/pizzas/${id}`
       )
       const remainingPizzas = allPizzas.filter(pizza => (
         pizza._id !== id
@@ -77,7 +77,7 @@ const PizzasState = ({children}) => {
   }, [])
 
   return (
-    <PizzasContext.Provider value={{ API_PIZZAS_URL, allPizzas, setAllPizzas, setPizzaInEditionMode, editablePizzaId, updatePizza, createPizza, deletePizza }}>
+    <PizzasContext.Provider value={{ API_URL, allPizzas, setAllPizzas, setPizzaInEditionMode, editablePizzaId, updatePizza, createPizza, deletePizza }}>
       {children}
     </PizzasContext.Provider>
   )
