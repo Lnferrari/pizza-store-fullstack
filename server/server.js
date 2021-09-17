@@ -19,8 +19,8 @@ app.get('/', (req, res) => {
   res.json('Welcome to the Pizza Store')
 })
 
-app.use('/pizzas', pizzasRouter)
-app.use('/cart', cartRouter)
+app.use(`${process.env.PUBLIC_URL}/pizzas`, pizzasRouter)
+app.use(`${process.env.PUBLIC_URL}/cart`, cartRouter)
 
 // ------------------------------
 
