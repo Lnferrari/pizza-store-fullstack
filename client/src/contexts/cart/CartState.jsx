@@ -12,7 +12,10 @@ const initialState = {
 const CartState = ({children}) => {
   const localCart = JSON.parse(localStorage.getItem('cart'))
   const [ cart, dispatch ] = useReducer(CartReducer, localCart || initialState)
-  const API_URL = useContext(PizzasContext)
+  
+  const API_URL = process.env.REACT_APP_API_URL
+
+  console.log('API =>', API_URL)
 
   let history = useHistory()
 
@@ -168,6 +171,7 @@ const CartState = ({children}) => {
 
   return (
     <CartContext.Provider value={{
+      API_URL,
       cart,
       createCart,
       addToCart,

@@ -1,13 +1,16 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import PizzasContext from './PizzasContext'
 import axios from 'axios'
+import CartContext from '../cart/CartContext'
 
 const PizzasState = ({children}) => {
   const localPizzas = JSON.parse(localStorage.getItem('pizzas'))
   const [ allPizzas, setAllPizzas ] = useState(localPizzas || [])
   const [ editablePizzaId, setEditablePizzaId ] = useState()
+  const { API_URL } = useContext(CartContext)
 
-  const API_URL = process.env.REACT_APP_API_URL
+  console.log('process', process.env.REACT_APP_API_URL)
+  console.log('api', API_URL);
 
   const fetchedData = async () => {
     try {

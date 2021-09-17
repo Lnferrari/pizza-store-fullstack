@@ -13,13 +13,12 @@ const initialPizzaState = {
 
 const PizzaItem = ({ id, image, name, description, price }) => {
 
-  const [modalShow, setModalShow] = useState(false);
+  const [ modalShow, setModalShow ] = useState(false);
   const [ editedPizza, setEditedPizza ] = useState(initialPizzaState)
   const {
     setPizzaInEditionMode,
     editablePizzaId,
     updatePizza,
-    createPizza,
     deletePizza
   } = useContext(PizzasContext)
   const { addToCart } = useContext(CartContext)
@@ -94,7 +93,7 @@ const PizzaItem = ({ id, image, name, description, price }) => {
     <Col l={6} className='mx-auto mb-5'>
       <Card className={`${pathname.endsWith('/admin') ? 'adminCard' : 'pizzaCard'} h-100`}
         style={{ width: '18rem', margin: '0 auto'}}>
-        <Card.Img src={image}  />
+        <Card.Img src={image} />
         <Card.Body>
         {
           id === editablePizzaId
